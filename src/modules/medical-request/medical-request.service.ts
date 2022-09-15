@@ -1,9 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateMedicalRequestDto } from './dto/create-medical-request.dto';
-import { UpdateMedicalRequestDto } from './dto/update-medical-request.dto';
-import { MedicalRequestDocument } from './schemas/medical-request.schema';
+import {
+  MedicalRequest,
+  MedicalRequestDocument,
+} from './schemas/medical-request.schema';
 
 @Injectable()
 export class MedicalRequestService {
@@ -19,19 +21,11 @@ export class MedicalRequestService {
     return medicalRequest.save();
   }
 
-  findAll() {
-    return `This action returns all medicalRequest`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} medicalRequest`;
-  }
-
-  update(id: number, updateMedicalRequestDto: UpdateMedicalRequestDto) {
-    return `This action updates a #${id} medicalRequest`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} medicalRequest`;
+  async findAll(): Promise<MedicalRequest[]> {
+    const medicalRequests = await this.medicalRequestModel.find();
+    if (medicalRequests.length > 0) {
+      return medicalRequests;
+    }
+    throw new HttpException(`Medical Requests not Found`, HttpStatus.NOT_FOUND);
   }
 }

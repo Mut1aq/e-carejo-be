@@ -1,12 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Mongoose, Document } from 'mongoose';
+import { Basic } from 'src/shared/util/basic.schema';
 
 export type MedicalRequestDocument = MedicalRequest & Document;
 
 @Schema({
   validateBeforeSave: true,
 })
-export class MedicalRequest {
+export class MedicalRequest extends Basic {
   @Prop({
     required: [true, 'First Name Must be Provided'],
     type: String,
@@ -41,7 +42,7 @@ export class MedicalRequest {
     required: [true, 'Country Must be Provided'],
     type: String,
   })
-  country: string;
+  country: String;
 
   @Prop({
     required: [true, 'Date of Birth Must be Provided'],
@@ -86,6 +87,11 @@ export class MedicalRequest {
     type: Boolean,
   })
   needsInterpreter: boolean;
+
+  @Prop({
+    type: String,
+  })
+  languages: string;
 
   @Prop({
     required: [true, 'You Must Confirm Whether You Need a Visa'],

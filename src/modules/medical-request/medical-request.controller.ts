@@ -17,18 +17,4 @@ export class MedicalRequestController {
     return this.medicalRequestService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.medicalRequestService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMedicalRequestDto: UpdateMedicalRequestDto) {
-    return this.medicalRequestService.update(+id, updateMedicalRequestDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.medicalRequestService.remove(+id);
-  }
 }
